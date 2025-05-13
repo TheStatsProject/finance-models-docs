@@ -1,0 +1,41 @@
+# Site Settings
+title: "Economic Analysis Documentation"
+description: "Comprehensive guides and resources for economic analysis."
+baseurl: "" # Specify the base URL if the site is hosted in a subdirectory
+url: "https://yourdomain.com" # Replace with your website's URL
+
+# Navigation Bar
+theme:
+  name: "mkdocs"
+  palette:
+    primary: "blue"
+    accent: "cyan"
+
+nav:
+  - Home: index.md
+  - Blog:
+      - Categories: blog/categories.md
+      - Archives: blog/archives.md
+  - Models:
+      - Macroeconomic: models/macroeconomic.md
+      - Microeconomic: models/microeconomic.md
+      - Forecasting: models/forecasting.md
+  - About:
+      - Contact: about/contact.md
+
+# Plugins (optional)
+plugins:
+  - search
+  - mkdocs-material
+
+# Repository Information
+repo_name: "TheStatsProject/finance-models-docs"
+repo_url: "https://github.com/TheStatsProject/finance-models-docs"
+
+# Additional Configurations
+markdown_extensions:
+  - toc:
+      permalink: true
+  - tables
+  - codehilite:
+      guess_lang: false
