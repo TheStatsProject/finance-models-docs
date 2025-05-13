@@ -1,0 +1,55 @@
+name: Deploy MkDocs
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'requirements.txt'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repo, preserving the GITHUB_TOKEN for pushes
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true   # needed for peaceiris to push :contentReference[oaicite:0]{index=0}
+          fetch-depth: 0              # full history, required if you use mike versioning :contentReference[oaicite:1]{index=1}
+
+      # 2. Cache pip packages by hashing requirements.txt
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip          # cache pip’s download cache :contentReference[oaicite:2]{index=2}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # 3. Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'       # use latest Python 3 :contentReference[oaicite:3]{index=3}
+
+      # 4. Install all dependencies from requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+                                   # include mkdocs-material, mkdocs-git-revision-date-localized, mkdocs-blog, mike, etc. :contentReference[oaicite:4]{index=4}
+
+      # 5. Build the MkDocs site into "site/"
+      - name: Build MkDocs site
+        run: mkdocs build --site-dir site
+                                   # keeps your gh-deploy step clean :contentReference[oaicite:5]{index=5}
+
+      # 6. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site       # publish the built site folder :contentReference[oaicite:6]{index=6}
+          # (Optional) if using a custom domain, provide it here:
+          # cname: finance.example.com :contentReference[oaicite:7]{index=7}
+          # (Optional) to preserve commit history per version, see mike integration below :contentReference[oaicite:8]{index=8}
