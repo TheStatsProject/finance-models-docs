@@ -1,8 +1,8 @@
 site_name: Finance Models
 site_description: Articles and models on macroeconomic and financial analysis
-site_url: https://<your-user>.github.io/<your-repo>/
+site_url: https://TheStatsProject.github.io/finance-models-docs/
 
-repo_url: https://github.com/<your-user>/<your-repo>
+repo_url: https://github.com/TheStatsProject/finance-models-docs
 edit_uri: edit/main/docs/
 
 theme:
