@@ -5,7 +5,7 @@ Welcome to the **Finance Models** project! This repository contains articles and
 
 ## Table of Contents
 - [About the Project](#about-the-project)
-- [Getting Started](#getting-started)
+- [Getting Started](#index)
 - [Documentation Structure](#documentation-structure)
 - [Deployment Process](#deployment-process)
 - [Contributing](#contributing)
