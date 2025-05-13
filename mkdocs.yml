@@ -1,118 +1,61 @@
-# Basic Site Information
-site_name: Finance Models
-site_description: Comprehensive articles and models on macroeconomic and financial analysis.
-site_author: TheStatsProject
-site_keywords: finance, macroeconomics, microeconomics, models, analysis
-site_url: https://TheStatsProject.github.io/finance-models-docs/
+# Site Settings
+title: "Economic Analysis Documentation"
+description: "Comprehensive guides and resources for economic analysis."
+baseurl: ""
+url: "https://yourdomain.com"
 
-# Repository and Editing
-repo_url: https://github.com/TheStatsProject/finance-models-docs
-edit_uri: blob/main/docs/  # Corrected path for GitHub repository editing
-
-# Theme Configuration
+# Navigation Bar
 theme:
   name: material
   palette:
-    - scheme: default
-      primary: indigo
-      accent: amber
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - scheme: slate
-      primary: indigo
-      accent: amber
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
+    primary: "indigo"
+    accent: "cyan"
   features:
     - navigation.tabs
-    - navigation.instant
-    - navigation.sections          # Improves usability for large sites
-    - search.suggest
-    - search.highlight             # Highlights searched terms in results
-    - content.code.annotate
-    - toc.integrate
-    - aria.*                       # Accessibility improvements
-  favicon: images/favicon.ico      # Custom favicon for branding
-  icon:
-    logo: images/logo.svg          # Specify a custom logo file
-    repo: fontawesome/brands/github
+    - navigation.top
+  logo: images/logo.png
+  favicon: images/favicon.ico
 
-# Plugins for Functionality
-plugins:
-  - search:
-      lang: en
-      separator: '[\s\-]'
-      boost: true                  # Improves relevance of search results
-  - git-revision-date-localized:
-      locale: en
-  - tags
-  - rss:
-      atom_link: atom.xml
-      url: https://TheStatsProject.github.io/finance-models-docs/
-  - redirects:
-      redirect_maps:
-        old-page: new-page
-  - minify:                        # Optimizes static files (ensure compatibility with other plugins)
-
-# Extra Metadata and Social Links
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/TheStatsProject
-  analytics:
-    google: UA-XXXXXXXXX-X         # Replace with your Google Analytics ID
-    gtag: GTM-XXXXXX               # Example for Google Tag Manager (optional)
-
-# Navigation Structure
 nav:
   - Home: index.md
   - Blog:
-      - Blog Home: blog/index.md
       - Categories: blog/categories.md
       - Archives: blog/archives.md
-  - Articles:
-      - Introduction to Models: articles/introduction.md
-      - Model A: articles/model_a.md
-      - Model B: articles/model_b.md
-      - Model C: articles/model_c.md
-  - Guides:
-      - Getting Started: guides/getting_started.md
-      - Advanced Usage: guides/advanced_usage.md
-  - About: about/about.md
-  - Contact: about/contact.md
+  - Models:
+      - Macroeconomic: models/macroeconomic.md
+      - Microeconomic: models/microeconomic.md
+      - Forecasting: models/forecasting.md
+  - About:
+      - Contact: about/contact.md
 
-use_directory_urls: true
+# Plugins
+plugins:
+  - search
+  - mkdocs-material
+  - toc:
+      permalink: true
+  - git-revision-date
+  - redirects
 
-# Markdown Extensions
+# Extra Configurations
+extra:
+  search:
+    language: "en"
+    separator: "[\\s\\-]+"
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/TheStatsProject/finance-models-docs
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/yourprofile
+
+# Repository Information
+repo_name: "TheStatsProject/finance-models-docs"
+repo_url: "https://github.com/TheStatsProject/finance-models-docs"
+
+# Additional Configurations
 markdown_extensions:
   - toc:
       permalink: true
-      title: Table of Contents
-  - admonition
-  - footnotes
-  - meta
-  - attr_list
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.details
-  - pymdownx.emoji
-
-# Custom Styling and JavaScript
-extra_css:
-  - css/custom.css                 # Create this file for custom styling
-    # Example: Change header color
-    # .md-header {
-    #   background-color: #f1f1f1 !important;
-    # }
-extra_javascript:
-  - js/custom.js                   # Create this file for custom JavaScript
-    # Example: Add a custom event listener
-    # document.addEventListener('DOMContentLoaded', function() {
-    #   console.log('Custom JS Loaded!');
-    # });
-
-# Error Handling
-extra_templates:
-  - 404.html                       # Add a custom 404 error page
+  - tables
+  - codehilite:
+      guess_lang: false
