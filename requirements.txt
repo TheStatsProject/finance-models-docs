@@ -1,3 +1,3 @@
 mkdocs-material
 mike
-git+https://github.com/TheStatsProject/mkdocs-tags.git
+git+https://${GITHUB_PAT}@github.com/TheStatsProject/mkdocs-tags.git
