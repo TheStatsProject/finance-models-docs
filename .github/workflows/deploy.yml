@@ -32,7 +32,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'        # install latest Python 3 version :contentReference[oaicite:3]{index=3}
+          python-version: '3.9'        # install latest Python 3 version :contentReference[oaicite:3]{index=3}
 
       # 4. Install all dependencies from requirements.txt
       - name: Install dependencies
