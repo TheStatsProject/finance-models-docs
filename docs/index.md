@@ -40,3 +40,7 @@ docs/
         about.md
         contact.md
 ```
+# Welcome to the Economic Analysis Documentation 2
+
+
+uhuu
