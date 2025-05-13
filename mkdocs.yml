@@ -51,15 +51,7 @@ nav:                          # define precise navigation order :contentReferenc
   - Home: index.md
   - Home: index.md
   - Example Article: example-article.md
-  - Models & Articles:
-      - Model A: models/model_a.md
-      - Model B: models/model_b.md
-      - My New Article: articles/my-new-article.md
-  - Blog:
-      - Blog Home: blog/index.md
-  - About:
-      - Team: about/team.md
-      - Contact: about/contact.md
+
 
 extra_css:
   - stylesheets/extra.css      # optional custom CSS overrides :contentReference[oaicite:17]{index=17}
