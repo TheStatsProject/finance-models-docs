@@ -1,4 +1,3 @@
 mkdocs-material
-mkdocs-tags
 mike
-
+git+https://github.com/TheStatsProject/mkdocs-tags.git
