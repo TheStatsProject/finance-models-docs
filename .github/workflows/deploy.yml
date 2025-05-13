@@ -13,17 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the repo, preserving the GITHUB_TOKEN for pushes
+      # 1. Checkout the repo, preserving the GITHUB_TOKEN for authenticated pushes
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true   # needed for peaceiris to push :contentReference[oaicite:0]{index=0}
-          fetch-depth: 0              # full history, required if you use mike versioning :contentReference[oaicite:1]{index=1}
+          persist-credentials: true    # keep GITHUB_TOKEN in local git config :contentReference[oaicite:0]{index=0}
+          fetch-depth: 0               # full history (needed for versioning with mike) :contentReference[oaicite:1]{index=1}
 
-      # 2. Cache pip packages by hashing requirements.txt
+      # 2. Cache pip downloads to speed up installs
       - name: Cache Python dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.cache/pip          # cache pip’s download cache :contentReference[oaicite:2]{index=2}
+          path: ~/.cache/pip           # cache pip’s download cache :contentReference[oaicite:2]{index=2}
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
@@ -32,24 +32,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'       # use latest Python 3 :contentReference[oaicite:3]{index=3}
+          python-version: '3.x'        # install latest Python 3 version :contentReference[oaicite:3]{index=3}
 
       # 4. Install all dependencies from requirements.txt
       - name: Install dependencies
         run: pip install -r requirements.txt
-                                   # include mkdocs-material, mkdocs-git-revision-date-localized, mkdocs-blog, mike, etc. :contentReference[oaicite:4]{index=4}
+        # includes mkdocs-material, mkdocs-blog, mkdocs-git-revision-date-localized, mkdocs-tags, mike :contentReference[oaicite:4]{index=4}
 
-      # 5. Build the MkDocs site into "site/"
+      # 5. Build the MkDocs site into a clean "site/" directory
       - name: Build MkDocs site
         run: mkdocs build --site-dir site
-                                   # keeps your gh-deploy step clean :contentReference[oaicite:5]{index=5}
+        # separates source from built output :contentReference[oaicite:5]{index=5}
 
-      # 6. Deploy to GitHub Pages
+      # 6. Deploy to GitHub Pages via peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site       # publish the built site folder :contentReference[oaicite:6]{index=6}
-          # (Optional) if using a custom domain, provide it here:
+          publish_dir: ./site        # publish the site folder to gh-pages :contentReference[oaicite:6]{index=6}
+          # (Optional) Add your custom domain:
           # cname: finance.example.com :contentReference[oaicite:7]{index=7}
-          # (Optional) to preserve commit history per version, see mike integration below :contentReference[oaicite:8]{index=8}
