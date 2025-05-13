@@ -25,15 +25,7 @@ jobs:
         with:
           python-version: '^3.9'        # use Python 3.9 and above for compatibility testing
 
-      # 3. Install all dependencies from requirements.txt
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      # 4. Lint MkDocs configuration to catch errors early
-      - name: Lint MkDocs config
-        run: mkdocs serve --config-file mkdocs.yml --strict
-
-      # 5. Cache pip downloads to speed up installs
+      # 3. Cache pip downloads to speed up installs
       - name: Cache Python dependencies
         uses: actions/cache@v3
         with:
@@ -41,6 +33,17 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
+
+      # 4. Install all dependencies from requirements.txt
+      - name: Install dependencies
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install -r requirements.txt
+
+      # 5. Lint MkDocs configuration to catch errors early
+      - name: Lint MkDocs config
+        run: mkdocs serve --config-file mkdocs.yml --strict
 
       # 6. Build the MkDocs site into a clean "site/" directory
       - name: Build MkDocs site
@@ -55,8 +58,12 @@ jobs:
           # (Optional) Add your custom domain:
           # cname: finance.example.com
 
-      # 8. Notify on deployment success or failure (Optional)
+      # 8. Notify on deployment success or failure
       - name: Notify on Deployment
-        if: failure() || success()
+        if: always()
         run: |
-          echo "The deployment was successful!" || echo "The deployment failed!"
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "The deployment was successful!"
+          else
+            echo "The deployment failed!"
+          fi
