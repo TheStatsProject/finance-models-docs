@@ -8,10 +8,9 @@ For general questions, reach out to:
 - Phone: +1 (555) 123-4567
 
 ## Feedback
-Have feedback or suggestions? Submit them [here](https://yourwebsite.com/feedback).
+Have feedback or suggestions? Submit them [here]
 
 ## Social Media
-- [Twitter](https://twitter.com/yourprofile)
-- [LinkedIn](https://linkedin.com/in/yourprofile)
+
 
 We look forward to connecting with you!,
