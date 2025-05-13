@@ -48,9 +48,9 @@ plugins:
 extra:
   social:
     - icon: fontawesome/brands/twitter
-      link: https://twitter.com/your_handle
+      link: https://twitter.com/TTP
     - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/in/your_id
+      link: https://linkedin.com/in/TTP
     - icon: fontawesome/brands/github
       link: https://github.com/TheStatsProject
   analytics:
