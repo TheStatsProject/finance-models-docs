@@ -19,11 +19,21 @@ jobs:
           persist-credentials: true    # keep GITHUB_TOKEN in local git config
           fetch-depth: 0               # full history (needed for versioning with mike)
 
-      # 2. Lint MkDocs configuration to catch errors early
+      # 2. Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '^3.9'        # use Python 3.9 and above for compatibility testing
+
+      # 3. Install all dependencies from requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 4. Lint MkDocs configuration to catch errors early
       - name: Lint MkDocs config
         run: mkdocs serve --config-file mkdocs.yml --strict
 
-      # 3. Cache pip downloads to speed up installs
+      # 5. Cache pip downloads to speed up installs
       - name: Cache Python dependencies
         uses: actions/cache@v3
         with:
@@ -32,21 +42,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      # 4. Set up Python environment
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '^3.9'        # use Python 3.9 and above for compatibility testing
-
-      # 5. Install all dependencies from requirements.txt
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-        # includes mkdocs-material, mkdocs-blog, mkdocs-git-revision-date-localized, mkdocs-tags, mike
-
       # 6. Build the MkDocs site into a clean "site/" directory
       - name: Build MkDocs site
         run: mkdocs build --site-dir site
-        # separates source from built output
 
       # 7. Deploy to GitHub Pages via peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages
