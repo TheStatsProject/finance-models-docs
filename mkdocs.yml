@@ -1,10 +1,15 @@
+# Basic Site Information
 site_name: Finance Models
-site_description: Articles and models on macroeconomic and financial analysis
+site_description: Comprehensive articles and models on macroeconomic and financial analysis.
+site_author: TheStatsProject
+site_keywords: finance, macroeconomics, microeconomics, models, analysis
 site_url: https://TheStatsProject.github.io/finance-models-docs/
 
+# Repository and Editing
 repo_url: https://github.com/TheStatsProject/finance-models-docs
-edit_uri: edit/main/docs/
+edit_uri: blob/main/docs/  # Corrected path for GitHub repository editing
 
+# Theme Configuration
 theme:
   name: material
   palette:
@@ -23,35 +28,44 @@ theme:
   features:
     - navigation.tabs
     - navigation.instant
+    - navigation.sections          # Improves usability for large sites
     - search.suggest
-    - content.code.annotate       # Improves readability of inline code snippets
-    - toc.integrate               # Integrates table of contents directly into the page
+    - search.highlight             # Highlights searched terms in results
+    - content.code.annotate
+    - toc.integrate
+    - aria.*                       # Accessibility improvements
+  favicon: images/favicon.ico      # Custom favicon for branding
   icon:
-    logo: images/logo.svg         # Specify a custom logo file (optional)
+    logo: images/logo.svg          # Specify a custom logo file
     repo: fontawesome/brands/github
 
+# Plugins for Functionality
 plugins:
   - search:
-      lang: en                    # Specify language for improved search accuracy
-      separator: '[\s\-]'         # Configure search indexing
+      lang: en
+      separator: '[\s\-]'
+      boost: true                  # Improves relevance of search results
   - git-revision-date-localized:
       locale: en
   - tags
   - rss:
-      atom_link: atom.xml         # Specify RSS feed file name
+      atom_link: atom.xml
       url: https://TheStatsProject.github.io/finance-models-docs/
-  - redirects:                    # Handle URL redirections (optional)
+  - redirects:
       redirect_maps:
         old-page: new-page
-  - minify:                       # Optimizes static files for faster load times
+  - minify:                        # Optimizes static files (ensure compatibility with other plugins)
 
+# Extra Metadata and Social Links
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/TheStatsProject
   analytics:
-    google: UA-XXXXXXXXX-X        # Add Google Analytics (replace with your ID)
+    google: UA-XXXXXXXXX-X         # Replace with your Google Analytics ID
+    gtag: GTM-XXXXXX               # Example for Google Tag Manager (optional)
 
+# Navigation Structure
 nav:
   - Home: index.md
   - Blog:
@@ -66,26 +80,40 @@ nav:
   - Guides:
       - Getting Started: guides/getting_started.md
       - Advanced Usage: guides/advanced_usage.md
-  - About: about/about.md
-  - Contact: about/contact.md
+  - About:
+      - About Us: about/about.md
+      - Contact: about/contact.md
 
 use_directory_urls: true
 
+# Markdown Extensions
 markdown_extensions:
   - toc:
       permalink: true
-      title: Table of Contents   # Add a title to the Table of Contents
+      title: Table of Contents
   - admonition
   - footnotes
   - meta
-  - attr_list                    # Allows custom attributes for Markdown elements
-  - pymdownx.highlight           # Syntax highlighting for code blocks
-  - pymdownx.superfences         # Enhanced code block handling
-  - pymdownx.details             # Collapsible content blocks
-  - pymdownx.emoji               # Support for emojis
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.emoji
 
+# Custom Styling and JavaScript
 extra_css:
-  - css/custom.css               # Add any custom styles (create this file in your docs folder)
-
+  - css/custom.css                 # Create this file for custom styling
+    # Example: Change header color
+    # .md-header {
+    #   background-color: #f1f1f1 !important;
+    # }
 extra_javascript:
-  - js/custom.js                 # Add custom JavaScript (create this file in your docs folder)
+  - js/custom.js                   # Create this file for custom JavaScript
+    # Example: Add a custom event listener
+    # document.addEventListener('DOMContentLoaded', function() {
+    #   console.log('Custom JS Loaded!');
+    # });
+
+# Error Handling
+extra_templates:
+  - 404.html                       # Add a custom 404 error page
