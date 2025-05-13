@@ -39,6 +39,9 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Export GITHUB_PAT for use in requirements.txt
+          export GITHUB_PAT=${{ secrets.GITHUB_TOKEN }}
+          # Install dependencies
           pip install -r requirements.txt
 
       # 5. Lint MkDocs configuration to catch errors early
