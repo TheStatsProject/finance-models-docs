@@ -24,29 +24,52 @@ theme:
     - navigation.tabs
     - navigation.instant
     - search.suggest
+    - content.code.annotate       # Improves readability of inline code snippets
+    - toc.integrate               # Integrates table of contents directly into the page
   icon:
+    logo: images/logo.svg         # Specify a custom logo file (optional)
     repo: fontawesome/brands/github
 
 plugins:
-  - search
-  - git-revision-date-localized
+  - search:
+      lang: en                    # Specify language for improved search accuracy
+      separator: '[\s\-]'         # Configure search indexing
+  - git-revision-date-localized:
+      locale: en
   - tags
-  - rss
+  - rss:
+      atom_link: atom.xml         # Specify RSS feed file name
+      url: https://TheStatsProject.github.io/finance-models-docs/
+  - redirects:                    # Handle URL redirections (optional)
+      redirect_maps:
+        old-page: new-page
+  - minify:                       # Optimizes static files for faster load times
 
 extra:
   social:
     - icon: fontawesome/brands/twitter
-      link: https://twitter.com/<your-handle>
+      link: https://twitter.com/your_handle
     - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/in/<your-id>
+      link: https://linkedin.com/in/your_id
+    - icon: fontawesome/brands/github
+      link: https://github.com/TheStatsProject
+  analytics:
+    google: UA-XXXXXXXXX-X        # Add Google Analytics (replace with your ID)
 
 nav:
   - Home: index.md
   - Blog:
-      - Home: blog/index.md
+      - Blog Home: blog/index.md
+      - Categories: blog/categories.md
+      - Archives: blog/archives.md
   - Articles:
+      - Introduction to Models: articles/introduction.md
       - Model A: articles/model_a.md
       - Model B: articles/model_b.md
+      - Model C: articles/model_c.md
+  - Guides:
+      - Getting Started: guides/getting_started.md
+      - Advanced Usage: guides/advanced_usage.md
   - About: about/about.md
   - Contact: about/contact.md
 
@@ -55,11 +78,18 @@ use_directory_urls: true
 markdown_extensions:
   - toc:
       permalink: true
+      title: Table of Contents   # Add a title to the Table of Contents
   - admonition
   - footnotes
   - meta
+  - attr_list                    # Allows custom attributes for Markdown elements
+  - pymdownx.highlight           # Syntax highlighting for code blocks
+  - pymdownx.superfences         # Enhanced code block handling
+  - pymdownx.details             # Collapsible content blocks
+  - pymdownx.emoji               # Support for emojis
 
-plugins:
-  - git-revision-date-localized:   # show last updated dates :contentReference[oaicite:20]{index=20}
-      locale: en
+extra_css:
+  - css/custom.css               # Add any custom styles (create this file in your docs folder)
 
+extra_javascript:
+  - js/custom.js                 # Add custom JavaScript (create this file in your docs folder)
