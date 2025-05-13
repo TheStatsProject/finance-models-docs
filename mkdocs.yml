@@ -1,10 +1,11 @@
-# Site Settings
-title: "Economic Analysis Documentation"
-description: "Comprehensive guides and resources for economic analysis."
-baseurl: ""
-url: "https://yourdomain.com"
+# Site Information
+site_name: "Finance Models Documentation"
+site_description: "Documentation for economic and financial models"
+site_url: "https://TheStatsProject.github.io/finance-models-docs"
+repo_name: "TheStatsProject/finance-models-docs"
+repo_url: "https://github.com/TheStatsProject/finance-models-docs"
 
-# Navigation Bar
+# Theme Configuration
 theme:
   name: material
   palette:
@@ -16,6 +17,7 @@ theme:
   logo: images/logo.png
   favicon: images/favicon.ico
 
+# Navigation Bar
 nav:
   - Home: index.md
   - Blog:
@@ -26,36 +28,18 @@ nav:
       - Microeconomic: models/microeconomic.md
       - Forecasting: models/forecasting.md
   - About:
-      - Contact: about/contact.md
+      - Contact Us: about/contact.md
 
 # Plugins
 plugins:
   - search
-  - mkdocs-material
-  - toc:
-      permalink: true
-  - git-revision-date
   - redirects
 
-# Extra Configurations
-extra:
-  search:
-    language: "en"
-    separator: "[\\s\\-]+"
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/TheStatsProject/finance-models-docs
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/yourprofile
-
-# Repository Information
-repo_name: "TheStatsProject/finance-models-docs"
-repo_url: "https://github.com/TheStatsProject/finance-models-docs"
-
-# Additional Configurations
+# Markdown Extensions
 markdown_extensions:
   - toc:
       permalink: true
   - tables
+  - admonition
   - codehilite:
       guess_lang: false
