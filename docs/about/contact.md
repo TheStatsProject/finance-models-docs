@@ -14,4 +14,4 @@ Have feedback or suggestions? Submit them [here](https://yourwebsite.com/feedbac
 - [Twitter](https://twitter.com/yourprofile)
 - [LinkedIn](https://linkedin.com/in/yourprofile)
 
-We look forward to connecting with you!
+We look forward to connecting with you!,
