@@ -49,7 +49,6 @@ extra:
 
 nav:                          # define precise navigation order :contentReference[oaicite:16]{index=16}
   - Home: index.md
-  - Home: index.md
   - Example Article: example-article.md
 
 
