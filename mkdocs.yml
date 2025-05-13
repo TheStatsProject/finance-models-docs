@@ -48,7 +48,7 @@ extra:
       link: https://linkedin.com/in/<your-id>
 
 nav:                          # define precise navigation order :contentReference[oaicite:16]{index=16}
-  - Home: docs/index.md
+  - Home: index.md
   - Example Article: docs/example-article.md
 
 
