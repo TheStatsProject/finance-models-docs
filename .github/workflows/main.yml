@@ -1,29 +1,90 @@
-name: Deploy MkDocs Site
+name: Deploy MkDocs
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'requirements.txt'
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-  permissions:
-    contents: write
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
 
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, 3.10] # Test with multiple Python versions
+
+    steps:
+      # 1. Checkout the repo, preserving the GITHUB_TOKEN for authenticated pushes
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      # 2. Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install Dependencies
+      # 3. Cache pip downloads to speed up installs
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Verify Cache Fallback
         run: |
-          pip install mkdocs-material
-          pip install mkdocs-redirects  # Install the missing plugin
+          if [ ! -d ~/.cache/pip ]; then
+            echo "Cache not restored. Dependencies will be installed from scratch."
+          fi
 
+      # 4. Install all dependencies from requirements.txt
+      - name: Install dependencies
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f "requirements.txt" ]; then
+            pip install -r requirements.txt
+          else
+            echo "requirements.txt not found!"
+            exit 1
+          fi
+
+      # 5. Lint MkDocs configuration to catch errors early
+      - name: Lint MkDocs config
+        run: |
+          mkdocs build --config-file mkdocs.yml --strict || (echo "Linting failed. Check MkDocs configuration."; exit 1)
+
+      # 6. Build the MkDocs site into a clean "site/" directory
+      - name: Build MkDocs site
+        run: mkdocs build --site-dir site
+
+      # 7. Deploy to GitHub Pages via peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          # (Optional) Add your custom domain:
+          # cname: finance.example.com
+
+      # 8. Notify deployment status via Slack (Optional)
+      - name: Notify on Deployment
+        if: always()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          mkdocs gh-deploy --force
+          if [[ -z "$SLACK_WEBHOOK_URL" ]]; then
+              echo "Slack webhook URL not configured. Skipping notification."
+          else
+              if [ "${{ job.status }}" == "success" ]; then
+                curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment succeeded 🚀"}' $SLACK_WEBHOOK_URL
+              else
+                curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment failed ❌"}' $SLACK_WEBHOOK_URL
+              fi
+          fi
