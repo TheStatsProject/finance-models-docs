@@ -32,6 +32,7 @@ nav:
 
 # Plugins
 plugins:
+  - mkdocs-material
   - search
   - redirects
 
