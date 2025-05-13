@@ -1,4 +1,4 @@
-mkdocs-material>=9.0.0
-mkdocs-git-revision-date-localized>=0.15.0
-mkdocs-tags>=0.2.0
-mike>=0.10.0
+mkdocs-material
+mkdocs-git-revision-date-localized
+mkdocs-tags
+mike
