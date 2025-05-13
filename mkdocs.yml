@@ -70,7 +70,18 @@ nav:
   - Home: index.md
   - Blog:
       - Blog Home: blog/index.md
-
+      - Categories: blog/categories.md
+      - Archives: blog/archives.md
+  - Articles:
+      - Introduction to Models: articles/introduction.md
+      - Model A: articles/model_a.md
+      - Model B: articles/model_b.md
+      - Model C: articles/model_c.md
+  - Guides:
+      - Getting Started: guides/getting_started.md
+      - Advanced Usage: guides/advanced_usage.md
+  - About: about/about.md
+  - Contact: about/contact.md
 
 use_directory_urls: true
 
