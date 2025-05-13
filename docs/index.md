@@ -1,17 +1,26 @@
-# Welcome to MkDocs
+# Welcome to the Economic Analysis Documentation
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Dive into the world of economic analysis! This documentation serves as a comprehensive guide to understanding and applying economic models to real-world scenarios. Whether you're a student, researcher, or professional, these resources will help you master the tools and techniques of economic analysis.
 
-## Commands
+## What You'll Find Here
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- **In-Depth Guides**: Step-by-step tutorials on key economic models.
+- **Case Studies**: Practical applications of economic models in finance, policy-making, and business strategy.
+- **Interactive Tools**: Explore datasets and visualization tools to enhance your understanding.
 
-## Project layout
+## Quick Start
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+To get started with our documentation, here’s a brief overview of the structure:
+
+```markdown
+mkdocs.yml    # Configuration file for the documentation.
+docs/
+    index.md  # Documentation homepage.
+    models/
+        macroeconomic.md  # Macroeconomic analysis models.
+        microeconomic.md  # Microeconomic techniques and tools.
+        forecasting.md    # Predictive analysis and forecasting.
+    datasets/
+        gdp.csv           # Sample dataset on GDP trends.
+        inflation.csv     # Dataset on inflation rates.
+    images/               # Visual aids and graphs.
