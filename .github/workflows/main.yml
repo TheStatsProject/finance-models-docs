@@ -28,6 +28,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Verify Python Version
+        run: |
+          python --version || (echo "Python setup failed. Please check the Python version configuration."; exit 1)
 
       # 3. Cache pip downloads to speed up installs
       - name: Cache Python dependencies
@@ -49,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -f "requirements.txt" ]; then
-            pip install -r requirements.txt --extra-index-url https://$GITHUB_TOKEN@github.com/TheStatsProject/mkdocs-tags.git
+            pip install -r requirements.txt --extra-index-url https://${GITHUB_TOKEN}@github.com/TheStatsProject/mkdocs-tags.git
           else
             echo "requirements.txt not found!"
             exit 1
@@ -79,8 +82,12 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          if [ "${{ job.status }}" == "success" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment succeeded 🚀"}' $SLACK_WEBHOOK_URL
+          if [ -z "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            echo "SLACK_WEBHOOK_URL is not set. Skipping Slack notification."
           else
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment failed ❌"}' $SLACK_WEBHOOK_URL
+            if [ "${{ job.status }}" == "success" ]; then
+              curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment succeeded 🚀"}' $SLACK_WEBHOOK_URL
+            else
+              curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment failed ❌"}' $SLACK_WEBHOOK_URL
+            fi
           fi
