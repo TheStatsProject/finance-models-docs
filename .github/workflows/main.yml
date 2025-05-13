@@ -2,7 +2,7 @@ name: Deploy MkDocs
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
@@ -16,20 +16,20 @@ jobs:
       # 1. Checkout the repo, preserving the GITHUB_TOKEN for authenticated pushes
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true    # keep GITHUB_TOKEN in local git config
-          fetch-depth: 0               # full history (needed for versioning with mike)
+          persist-credentials: true
+          fetch-depth: 0
 
       # 2. Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '^3.9'        # use Python 3.9 and above for compatibility testing
+          python-version: '^3.9'
 
       # 3. Cache pip downloads to speed up installs
       - name: Cache Python dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.cache/pip           # cache pip’s download cache
+          path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
@@ -37,16 +37,18 @@ jobs:
       # 4. Install all dependencies from requirements.txt
       - name: Install dependencies
         env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Export GITHUB_PAT for use in requirements.txt
-          export GITHUB_PAT=${{ secrets.GITHUB_TOKEN }}
-          # Install dependencies
-          pip install -r requirements.txt
+          if [ -f "requirements.txt" ]; then
+            pip install -r requirements.txt
+          else
+            echo "requirements.txt not found!"
+            exit 1
+          fi
 
       # 5. Lint MkDocs configuration to catch errors early
       - name: Lint MkDocs config
-        run: mkdocs serve --config-file mkdocs.yml --strict
+        run: mkdocs build --config-file mkdocs.yml --strict
 
       # 6. Build the MkDocs site into a clean "site/" directory
       - name: Build MkDocs site
@@ -57,7 +59,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site        # publish the site folder to gh-pages
+          publish_dir: ./site
           # (Optional) Add your custom domain:
           # cname: finance.example.com
 
